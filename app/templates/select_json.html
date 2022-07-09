@@ -1,0 +1,207 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% get_static_prefix %}bootstrap.css">
+</head>
+
+<body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+
+    <div class="card" style="width: 30rem;">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Navbar Font Color</span>
+                <span><input type="color" name="Font_Color" id="mm1"
+                        onchange="localStorage.setItem('Font_Color',this.value)"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Navbar Background Color</span>
+                <span><input type="color" name="Background_Color"
+                        onchange="localStorage.setItem('Background_Color',this.value)" id="mm2"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>List of locations to be show</span>
+                <span><input type="number" name="Locations_numbers" id="mm3"
+                        onchange="localStorage.setItem('Locations_numbers',this.value)"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Reset default</span>
+                <span><button
+                        onclick="localStorage.removeItem('Font_Color');localStorage.removeItem('Background_Color');localStorage.removeItem('Locations_numbers');reset();location.reload();">Set
+                        Default</button></span>
+            </li>
+            <a class="list-group-item d-flex justify-content-between" href="{%url 'dashboard'%}">
+                Go back
+            </a>
+        </ul>
+    </div>
+
+    <script>
+        if (! localStorage.getItem('Font_Color')){
+            localStorage.setItem('Font_Color', '#ffffff')
+        };
+        if (! localStorage.getItem('Background_Color')){
+            localStorage.setItem('Background_Color', '#132449')
+        };
+        if (! localStorage.getItem('Locations_numbers')){
+            localStorage.setItem('Locations_numbers', '100')
+        };
+        function reset(){
+        document.getElementById("mm1").value = localStorage.getItem('Font_Color');
+        document.getElementById("mm2").value = localStorage.getItem('Background_Color');
+        document.getElementById("mm3").value = localStorage.getItem('Locations_numbers');
+        };
+        reset();
+    </script>
+
+</body>
+
+</html> -->
+
+
+
+
+
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% get_static_prefix %}bootstrap.css">
+    <link rel="stylesheet" href="{% get_static_prefix %}style.css">
+    <script src="{% get_static_prefix %}jquery.min.js"></script>
+    <style>
+        .jjnkjndk:hover {
+            background-color: rgb(179, 255, 176);
+        }
+    </style>
+</head>
+
+<body style="height: 100vh;">
+    <script>
+        $(function () {
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            $(window).resize(function (e) {
+                if ($(window).width() <= 768) {
+                    $("#wrapper").removeClass("toggled");
+                } else {
+                    $("#wrapper").addClass("toggled");
+                }
+            });
+        });
+    </script>
+    <nav class="navbar fixed-top navbar-expand d-flex justify-content-between" id="bjksdjks">
+        <div class="uyhbfdhbhueb mx-3">
+            <a href="{%url 'dashboard'%}" class="uyhbfdhbhueb">Back</a>
+            <a href="#menu-toggle" id="menu-toggle" class="navbar-brand mx-3" style="color: #fff !important;"></a>
+        </div>
+    </nav>
+    <div id="wrapper">
+        <div class="container-fluid d-flex justify-content-center align-items-center"
+            style="overflow-y: auto !important;height: 100%;position: fixed;">
+
+            <div class="card" style="width: 30rem;overflow-y: auto !important;">
+                <ul class="list-group list-group-flush" style="overflow-y: auto !important;">
+                    <li class="d-flex justify-content-around" style="border: none;background-color: whitesmoke;">
+                        {% if file_list %}
+                        <h6 id="uihiuduiei">Status : No file selected</h6>
+                        {% else %}
+                        <h3 style="color: red;">No single Uploaded yet..!</h3>
+                        {% endif %}
+                    </li>
+                    {% if file_list %}
+                    {% for i in file_list %}
+                    <li class="list-group-item d-flex justify-content-between" id="aa{{forloop.counter0}}"
+                        onclick="localStorage.setItem('json_file','{{i}}'); Activator();">
+                        <span>{{i}}</span>
+                        <form action="" method="post" onsubmit="localStorage.setItem('json_file', '')">
+                            {% csrf_token %}
+                            <input type="hidden" name="deleting_file" value="{{i}}">
+                            <button type="submit" onclick="localStorage.setItem('json_file', '')" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                    {% else %}
+                    <a href="{% url 'json_upload' %}" class="list-group-item">Upload JSON file</a>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <!-- <script>
+                if (!localStorage.getItem('Font_Color')) {
+                    localStorage.setItem('Font_Color', '#ffffff')
+                };
+                if (!localStorage.getItem('Background_Color')) {
+                    localStorage.setItem('Background_Color', '#132449')
+                };
+                if (!localStorage.getItem('Locations_numbers')) {
+                    localStorage.setItem('Locations_numbers', '100')
+                };
+                function reset() {
+                    document.getElementById("mm1").value = localStorage.getItem('Font_Color');
+                    document.getElementById("mm2").value = localStorage.getItem('Background_Color');
+                    document.getElementById("mm3").value = localStorage.getItem('Locations_numbers');
+                };
+                reset();
+            </script> -->
+            <script>
+                function hbhbe(){
+                    var jjiiuji = document.getElementById("uihiuduiei");
+                    if(localStorage.getItem('json_file')){
+                        jjiiuji.innerHTML = "Selected : <b>"+localStorage.getItem('json_file')+"</b>"
+                    }else{
+                        jjiiuji.innerHTML = "No JSON file selected"
+                    }
+                }
+                function Activator() {
+                    hbhbe();
+                    for (var i = 0; i < {{ file_list| length}}; i++) {
+                    if (document.getElementById("aa" + i).getElementsByTagName("span")[0].textContent == localStorage.getItem("json_file")) {
+                        $('#aa' + i).addClass('active');$('#aa' + i).removeClass('jjnkjndk');
+                        // console.log(i);
+                        hbhbe()
+                    }else{
+                        $('#aa' + i).removeClass('active');
+                        $('#aa' + i).addClass('jjnkjndk');
+                        }
+                    }
+                }
+                Activator();
+
+
+
+            </script>
+        </div>
+    </div>
+
+
+    <script src="{% get_static_prefix %}script.js"></script>
+    <script>
+        if (!localStorage.getItem('Font_Color')) {
+            localStorage.setItem('Font_Color', '#ffffff')
+        };
+        if (!localStorage.getItem('Background_Color')) {
+            localStorage.setItem('Background_Color', '#132449')
+        };
+        if (!localStorage.getItem('Locations_numbers')) {
+            localStorage.setItem('Locations_numbers', '100')
+        };
+        $('#sidebar-wrapper').attr('style', 'background-color: ' + localStorage.getItem('Background_Color') + ' !important');
+        $('#bjksdjks').attr('style', 'background-color: ' + localStorage.getItem('Background_Color') + ' !important');
+        $('#menu-toggle').attr('style', 'color: ' + localStorage.getItem('Font_Color') + ' !important');
+        $('.uyhbfdhbhueb').attr('style', 'color: ' + localStorage.getItem('Font_Color') + ' !important');
+    </script>
+</body>
+
+</html>

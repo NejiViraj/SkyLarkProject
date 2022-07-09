@@ -1,0 +1,297 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% get_static_prefix %}bootstrap.css">
+    <!-- <link rel="stylesheet" href="{% get_static_prefix %}style.css"> -->
+    <script src="{% get_static_prefix %}jquery.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <style>
+        #myProgress {
+            width: 100%;
+            background-color: #ddd;
+        }
+
+        #myBar {
+            width: 1%;
+            height: 30px;
+            background-color: #0d6efd;
+        }
+    </style>
+</head>
+
+<body style="height: 100vh;">
+    <script>
+        $(function () {
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            $(window).resize(function (e) {
+                if ($(window).width() <= 768) {
+                    $("#wrapper").removeClass("toggled");
+                } else {
+                    $("#wrapper").addClass("toggled");
+                }
+            });
+        });
+    </script>
+    <nav class="navbar fixed-top navbar-expand d-flex justify-content-between" id="bjksdjks">
+        <div class="uyhbfdhbhueb mx-3">
+            <a href="{%url 'dashboard'%}" class="uyhbfdhbhueb">Back</a>
+            <a href="#menu-toggle" id="menu-toggle" class="navbar-brand mx-3" style="color: #fff !important;"></a>
+        </div>
+    </nav>
+    <div id="wrapper">
+        <div class="container-fluid d-flex justify-content-center align-items-center"
+            style="height: 100%;position: fixed;">
+            <div class="card w-50" style="padding: 10px;">
+                <div class="card-body">
+                    <h5 class="card-title my-3">Upload JSON file here</h5>
+                    <form action="" method="post" enctype="multipart/form-data" onsubmit="onFormSubmit(event)" id="myForm_hjbshhbs">
+                        {% csrf_token %}
+                        <p class="card-text d-flex justify-content-around">
+                            <input type="file" name="document" id="file1" accept="application/json"
+                                onchange="hbdhbhjd()">
+                            <a id="preview"
+                                onclick="hljs.initHighlightingOnLoad();  document.getElementById('preview_bhjhdbhj').click();"></a>
+                            <button type="button" style="display: none;" id="preview_bhjhdbhj" data-toggle="modal"
+                                data-target="#exampleModal2"></button>
+                            <script>function hbdhbhjd() { if (document.getElementById('file1').files.length == 1) { document.getElementById('preview').innerText = '👁'; document.getElementById("Validator").style["display"] = "block"; }; }</script>
+                        </p>
+                        <button type="button" class="btn btn-primary" style="display: none;" id="Validator"
+                            onclick="Validator()">Validate</button>
+                        <button class="btn btn-primary" style="display: none;" id="upload_file">Upload file</button>
+                    </form>
+                </div>
+                <div class="progress" id="progessDIV" style="display: none;">
+                    <div id="myProgress">
+                        <div id="myBar"></div>
+                    </div>
+                </div>
+                <p class="card-text" id="progessDIV1" style="display: none;">Uploading file</p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        code {
+            display: block;
+            white-space: pre-wrap;
+        }
+    </style>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Selected file preview (Shows first 7000 letters only)
+                    </h5>
+                    </button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto;">
+                    <pre><code class="JSON" id="code_previewer">
+                </code></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" style="display: none;" id="validate_bhjhdbhj" data-toggle="modal"
+        data-target="#exampleModal1"></button>
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: red;">Selected file Pattern error</h5>
+                    </button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto;">
+                    <pre><code class="JSON" id="code_previewer">
+// Validator validates only first index
+// File patter should be in this format
+[
+        {
+            "drone_name": "Ritvik",
+            "reg_id": 1,
+            "location": {
+                "latitude": 26.027207835264562,
+                "longitude": 85.05834646542837
+            },
+            "last_seen": "2021-02-20 01:11:37",
+            "first_launch": "2021-02-02 13:43:52",
+            "total_flight_time_min": 128,
+            "drone_type": {
+                "id": 37,
+                "model_name": "Mini pro",
+                "brand": "DJI",
+                "model_year": "2016",
+                "endurance_min": "24",
+                "sl_no": "082-23-8151",
+                "type": "quad"
+            },
+            "pilot": {
+            "id": 3637,
+            "name": "Rania Tak",
+            "address": "702\nCheema Street\nBerhampore-250764",
+            "phone": "07435013056",
+            "experience": 1,
+            "skill": 3,
+            "country": "India"
+        }
+    }, ...
+]
+                </code></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.reload()" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function onFormSubmit(event) {
+            event.preventDefault();
+            var formData = new FormData();
+            formData.append('document', document.getElementById("file1").files[0]);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', window.location.href, true);
+            xhr.setRequestHeader("X-CSRFToken", document.getElementsByName("csrfmiddlewaretoken")[0].value);
+            xhr.upload.addEventListener("progress", function (ev) {
+                if (ev.lengthComputable) {
+                    document.getElementById('progessDIV').style['display'] = 'block';
+                    document.getElementById('progessDIV1').style['display'] = 'block';
+                    var percentage = (ev.loaded / ev.total * 100 | 0);
+                    document.getElementById("myBar").style['width'] = "" + Math.round(percentage) + "%";
+                    document.getElementById("progessDIV1").innerHTML = "Uploaded : " + Math.round(percentage) + " %"
+                    if(percentage == "100"){
+                        window.location.reload();
+                        document.getElementById('myForm_hjbshhbs').reset();
+                    }
+                }
+            })
+            xhr.send(formData);
+        }
+    </script>
+
+
+    <script>
+        if (!localStorage.getItem('Font_Color')) {
+            localStorage.setItem('Font_Color', '#ffffff')
+        };
+        if (!localStorage.getItem('Background_Color')) {
+            localStorage.setItem('Background_Color', '#132449')
+        };
+        if (!localStorage.getItem('Locations_numbers')) {
+            localStorage.setItem('Locations_numbers', '100')
+        };
+        $('#sidebar-wrapper').attr('style', 'background-color: ' + localStorage.getItem('Background_Color') + ' !important');
+        $('#bjksdjks').attr('style', 'background-color: ' + localStorage.getItem('Background_Color') + ' !important');
+        $('#menu-toggle').attr('style', 'color: ' + localStorage.getItem('Font_Color') + ' !important');
+        $('.uyhbfdhbhueb').attr('style', 'color: ' + localStorage.getItem('Font_Color') + ' !important');
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script>
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+    </script>
+    <script>
+        const input = document.querySelector('#file1');
+
+        let cache = null;
+        var mm_hjbhjbfbj = ""
+
+        function onFileChange(event) {
+            const [file] = event.target.files;
+
+            cache = file;
+
+            readFileData(file).then(result => {
+                document.getElementById("code_previewer").innerHTML = result.slice(0, 7000);
+                mm_hjbhjbfbj = result;
+            })
+        }
+
+        function readFileData(file) {
+            const reader = new FileReader(file);
+
+            return new Promise((resolve, reject) => {
+                reader.onload = event => resolve(event.target.result);
+                reader.onerror = error => reject(error)
+                reader.readAsText(file);
+            });
+        }
+        input.addEventListener('change', onFileChange);
+
+        function patternFind(dict) {
+            if (typeof (dict) == "object") {
+                if (typeof (dict["drone_name"]) == "string" &&
+                    typeof (dict["reg_id"]) == "number" &&
+                    typeof (dict["location"]) == "object" &&
+                    typeof (dict["last_seen"]) == "string" &&
+                    typeof (dict["first_launch"]) == "string" &&
+                    typeof (dict["total_flight_time_min"]) == "number" &&
+                    typeof (dict["drone_type"]) == "object" &&
+                    typeof (dict["pilot"]) == "object" &&
+
+                    typeof (dict["location"]["latitude"]) == "number" &&
+                    typeof (dict["location"]["longitude"]) == "number" &&
+
+
+                    typeof (dict["drone_type"]['id']) == "number" &&
+                    typeof (dict["drone_type"]['model_name']) == "string" &&
+                    typeof (dict["drone_type"]['brand']) == "string" &&
+                    typeof (dict["drone_type"]['model_year']) == "string" &&
+                    typeof (dict["drone_type"]['endurance_min']) == "string" &&
+                    typeof (dict["drone_type"]['sl_no']) == "string" &&
+                    typeof (dict["drone_type"]['type']) == "string" &&
+
+
+                    typeof (dict["pilot"]['id']) == "number" &&
+                    typeof (dict["pilot"]['name']) == "string" &&
+                    typeof (dict["pilot"]['address']) == "string" &&
+                    typeof (dict["pilot"]['phone']) == "string" &&
+                    typeof (dict["pilot"]['experience']) == "number" &&
+                    typeof (dict["pilot"]['skill']) == "number" &&
+                    typeof (dict["pilot"]['country']) == "string"
+                ) {
+                    return true
+                } else { return false }
+            } else { return false }
+        }
+
+        function Validator() {
+            try {
+                if (JSON.parse(mm_hjbhjbfbj)[0]) {
+                    document.getElementById("Validator").style["display"] = "none";
+                    document.getElementById("upload_file").style["display"] = "block";
+                } else {
+                    document.getElementById("validate_bhjhdbhj").click();
+                }
+            } catch {
+                document.getElementById("validate_bhjhdbhj").click();
+            }
+        }
+        document.getElementById("Validator").addEventListener('click', Validator)
+    </script>
+</body>
+
+</html>

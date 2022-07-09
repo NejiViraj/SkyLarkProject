@@ -1,0 +1,105 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% get_static_prefix %}bootstrap.css">
+    <link rel="stylesheet" href="{% get_static_prefix %}style.css">
+    <script src="{% get_static_prefix %}jquery.min.js"></script>
+</head>
+
+<body style="height: 100vh;">
+    <script>
+        $(function () {
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            $(window).resize(function (e) {
+                if ($(window).width() <= 768) {
+                    $("#wrapper").removeClass("toggled");
+                } else {
+                    $("#wrapper").addClass("toggled");
+                }
+            });
+        });
+    </script>
+    <nav class="navbar fixed-top navbar-expand d-flex justify-content-between" id="bjksdjks">
+        <div class="uyhbfdhbhueb mx-3">
+            <a href="{%url 'dashboard'%}" class="uyhbfdhbhueb">Back</a>
+            <a href="#menu-toggle" id="menu-toggle" class="navbar-brand mx-3" style="color: #fff !important;"></a>
+        </div>
+    </nav>
+    <div id="wrapper">
+        <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100%;position: fixed;">
+            <div class="card" style="width: 30rem;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><b>Name</b></span>
+                        <span>Viraj Neji</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><b>Mobile no.</b></span>
+                        <span>+91 74482 45945</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><b>Graduate in</b></span>
+                        <span>B. Tech Electrical Engg. ( GCE karad )</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span></span>
+                        <a href="{%url 'dashboard'%}">
+                            Go back
+                        </a>
+                        <span></span>
+                    </li>
+                    <!-- <a class="list-group-item d-flex justify-content-between" href="{%url 'dashboard'%}">
+                        Go back
+                    </a> -->
+                </ul>
+            </div>
+        
+            <script>
+                if (! localStorage.getItem('Font_Color')){
+                    localStorage.setItem('Font_Color', '#ffffff')
+                };
+                if (! localStorage.getItem('Background_Color')){
+                    localStorage.setItem('Background_Color', '#132449')
+                };
+                if (! localStorage.getItem('Locations_numbers')){
+                    localStorage.setItem('Locations_numbers', '100')
+                };
+                function reset(){
+                document.getElementById("mm1").value = localStorage.getItem('Font_Color');
+                document.getElementById("mm2").value = localStorage.getItem('Background_Color');
+                document.getElementById("mm3").value = localStorage.getItem('Locations_numbers');
+                };
+                reset();
+            </script>
+        </div>
+    </div>
+
+
+    <script src="{% get_static_prefix %}script.js"></script>
+    <script>
+        if (!localStorage.getItem('Font_Color')) {
+            localStorage.setItem('Font_Color', '#ffffff')
+        };
+        if (!localStorage.getItem('Background_Color')) {
+            localStorage.setItem('Background_Color', '#132449')
+        };
+        if (!localStorage.getItem('Locations_numbers')) {
+            localStorage.setItem('Locations_numbers', '100')
+        };
+        $('#sidebar-wrapper').attr('style', 'background-color: ' + localStorage.getItem('Background_Color') + ' !important');
+        $('#bjksdjks').attr('style', 'background-color: ' + localStorage.getItem('Background_Color') + ' !important');
+        $('#menu-toggle').attr('style', 'color: ' + localStorage.getItem('Font_Color') + ' !important');
+        $('.uyhbfdhbhueb').attr('style', 'color: ' + localStorage.getItem('Font_Color') + ' !important');
+    </script>
+</body>
+
+</html>

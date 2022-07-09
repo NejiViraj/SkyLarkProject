@@ -1,0 +1,319 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% get_static_prefix %}bootstrap.css">
+    <link rel="stylesheet" href="{% get_static_prefix %}style.css">
+    <script src="{% get_static_prefix %}jquery.min.js"></script>
+    <script src="{% get_static_prefix %}pagination.min.js"></script>
+</head>
+
+<body>
+    <script>
+        $(function () {
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            $(window).resize(function (e) {
+                if ($(window).width() <= 768) {
+                    $("#wrapper").removeClass("toggled");
+                } else {
+                    $("#wrapper").addClass("toggled");
+                }
+            });
+        });
+    </script>
+    <nav class="navbar navbar-expand d-flex justify-content-between" id="bjksdjks">
+        <div class="uyhbfdhbhueb mx-3">
+            <a href="{%url 'dashboard'%}" class="uyhbfdhbhueb">Back</a>
+            <a href="#menu-toggle" id="menu-toggle" class="navbar-brand mx-3" style="color: #fff !important;"></a>
+        </div>
+    </nav>
+    <div id="wrapper" style="overflow-y: auto;">
+        <div class="container-fluid" style="height: 100%;position: fixed;overflow-y: auto;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center" id="pages">
+
+                    <li class="page-item"  id="prev_page">
+                        <a class="page-link" href="">Previous</a>
+                    </li>
+
+                    <li class="page-item"><a class="page-link" href="">1</a></li>
+                    <li class="page-item"><a class="page-link" href="">2</a></li>
+                    <li class="page-item"><a class="page-link" href="">3</a></li>
+
+                    <li class="page-item" id="next_page">
+                        <a class="page-link" href="">Next</a>
+                    </li>
+
+                </ul>
+            </nav> -->
+
+
+            
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center" id="pages">
+
+                <li class="page-item"  id="prev_page">
+                    <a style="display: none;" class="page-link huan1">Previous</a>
+                </li>
+
+                <li class="page-item active"><a style="display: none;" class="page-link huan2">1</a></li>
+                <li class="page-item"><a style="display: none;" class="page-link huan3">2</a></li>
+                <li class="page-item"><a style="display: none;" class="page-link huan4">3</a></li>
+
+                <li class="page-item" id="next_page">
+                    <a style="display: none;" class="page-link huan5">Next</a>
+                </li>
+
+            </ul>
+        </nav>
+
+            <table class="table table-striped my-3">
+                <thead>
+                    <tr>
+                        <th scope="col">Reg. id</th>
+                        <th scope="col">Drone name</th>
+                        <th scope="col">First launch</th>
+                        <th scope="col">total flight time min</th>
+                    </tr>
+                </thead>
+                <tbody id="datashower">
+                    <!-- <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr> -->
+                </tbody>
+            </table>
+
+
+            
+<script>
+    pagination(1, 50, 40);
+    
+    function pagination(current_page, overall_show_pages, per_page_display){
+        var current_page = current_page
+        var overall_show = overall_show_pages
+        var per_page = per_page_display
+        var total_pages = Math.ceil(overall_show/per_page)
+        var mm = [0];
+        for(var i=1; i<= total_pages; i++){
+            mm.push(i)
+        };
+        mm.push(0);
+        if(0<current_page-1<total_pages && 6<=total_pages && !(current_page-1<=0)){
+            $(".huan1").show();
+            $(".huan1").text('(prev) '+(current_page-1));
+            $(".huan1").attr('onclick', 'pagination('+(current_page-1)+', '+overall_show_pages+', '+per_page_display+'); data_shower('+(current_page-2)*50+')');;
+        }
+        if((current_page-1<=0)){$(".huan1").hide();}
+        if(3<=total_pages){
+            $(".huan2").show();
+            $(".huan2").text((current_page));
+            $(".huan2").attr('onclick', 'pagination('+(current_page)+', '+overall_show_pages+', '+per_page_display+'); data_shower('+(current_page-1)*50+')');;
+        }
+        if(4<=total_pages && current_page !=total_pages  && current_page+1<=total_pages){
+            $(".huan3").show();
+            $(".huan3").text((current_page+1));
+            $(".huan3").attr('onclick', 'pagination('+(current_page+1)+', '+overall_show_pages+', '+per_page_display+'); data_shower('+(current_page)*50+')');;
+        }if(current_page>=total_pages){$(".huan3").hide();}
+        if(5<=total_pages && current_page+1 !=total_pages && current_page+2<=total_pages){
+            $(".huan4").show();
+            $(".huan4").text((current_page+2));
+            $(".huan4").attr('onclick', 'pagination('+(current_page+2)+', '+overall_show_pages+', '+per_page_display+'); data_shower('+(current_page+2)*50+')');;
+        }if(current_page+1>=total_pages){$(".huan4").hide();}
+        if(6<=total_pages && current_page+3 <=total_pages){
+            $(".huan5").show();
+            $(".huan5").text(('(next) '+(current_page+3)));
+            $(".huan5").attr('onclick', 'pagination('+(current_page+3)+', '+overall_show_pages+', '+per_page_display+'); data_shower('+(current_page+3)*50+')');;
+        }if(current_page+2>=total_pages){$(".huan5").hide();}
+    
+    }
+    </script>
+    
+    
+    
+    
+
+    
+
+            <script>
+
+                function readTextFile(file, callback) {
+                    var rawFile = new XMLHttpRequest();
+                    rawFile.overrideMimeType("application/json");
+                    rawFile.open("GET", file, true);
+                    rawFile.onreadystatechange = function () {
+                        if (rawFile.readyState === 4 && rawFile.status == "200") {
+                            callback(rawFile.responseText);
+                        }
+                    }
+                    rawFile.send(null);
+                }
+                var data1 = ""
+                data_shower(0);
+                readTextFile("/media/" + localStorage.getItem("json_file"), function (text) {
+                    data1 = JSON.parse(text);
+                });
+
+                function content(a, b, c, d) {
+                    return '<tr><th scope="row">' + a + '</th>' +
+                        ' <td>' + b + '</td>' +
+                        ' <td>' + c + '</td>' +
+                        ' <td>' + d + '</td>' +
+                        '</tr>'
+                }
+
+                function data_shower(number) {
+                    document.getElementById("datashower").innerHTML = "";
+                    for (var i = number; i < number + 51; i++) {
+                        $("#datashower").append(content(data1[i]['reg_id'], data1[i]['drone_name'], data1[i]['first_launch'], data1[i]['total_flight_time_min']))
+                    }
+                }
+
+
+            </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <li class="page-item"  id="prev_page">
+    <a class="page-link" href="">Previous</a>
+</li>
+
+<li class="page-item"><a class="page-link" href="">1</a></li>
+<li class="page-item"><a class="page-link" href="">2</a></li>
+<li class="page-item"><a class="page-link" href="">3</a></li>
+
+<li class="page-item" id="next_page">
+    <a class="page-link" href="">Next</a>
+</li> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+    <!-- <script src="{% get_static_prefix %}script.js"></script> -->
+    <script>
+        if (!localStorage.getItem('Font_Color')) {
+            localStorage.setItem('Font_Color', '#ffffff')
+        };
+        if (!localStorage.getItem('Background_Color')) {
+            localStorage.setItem('Background_Color', '#132449')
+        };
+        if (!localStorage.getItem('Locations_numbers')) {
+            localStorage.setItem('Locations_numbers', '100')
+        };
+        $('#sidebar-wrapper').attr('style', 'background-color: ' + localStorage.getItem('Background_Color') + ' !important');
+        $('#bjksdjks').attr('style', 'background-color: ' + localStorage.getItem('Background_Color') + ' !important');
+        $('#menu-toggle').attr('style', 'color: ' + localStorage.getItem('Font_Color') + ' !important');
+        $('.uyhbfdhbhueb').attr('style', 'color: ' + localStorage.getItem('Font_Color') + ' !important');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% get_static_prefix %}bootstrap.css">
+    <!-- <link rel="stylesheet" href="{% get_static_prefix %}style.css"> -->
+    <script src="{% get_static_prefix %}jquery.min.js"></script>
+    <style>
+        #myProgress {
+            width: 100%;
+            background-color: #ddd;
+        }
+
+        #myBar {
+            width: 1%;
+            height: 30px;
+            background-color: #0d6efd;
+        }
+    </style>
+</head>
+
+<body style="height: 100vh;">
+    <script>
+        $(function () {
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            $(window).resize(function (e) {
+                if ($(window).width() <= 768) {
+                    $("#wrapper").removeClass("toggled");
+                } else {
+                    $("#wrapper").addClass("toggled");
+                }
+            });
+        });
+    </script>
+    <nav class="navbar fixed-top navbar-expand d-flex justify-content-between" id="bjksdjks">
+        <div class="uyhbfdhbhueb mx-3">
+            <a href="{%url 'dashboard'%}" class="uyhbfdhbhueb">Back</a>
+            <a href="#menu-toggle" id="menu-toggle" class="navbar-brand mx-3" style="color: #fff !important;"></a>
+        </div>
+    </nav>
+    <div id="wrapper">
+        <div class="container-fluid d-flex justify-content-center align-items-center"
+            style="height: 100%;position: fixed;">
+            <div class="card w-50" style="padding: 10px;">
+                <div class="card-body">
+                    <h5 class="card-title my-3">Upload JSON file here</h5>
+                    <form action="" method="post" enctype="multipart/form-data" onsubmit="onFormSubmit(event)">
+                        {% csrf_token %}
+                        <p class="card-text">
+                            <input type="file" name="document" id="file1" accept="application/json">
+                        </p>
+                        <button class="btn btn-primary">Upload file</button>
+                    </form>
+                </div>
+                <div class="progress" id="progessDIV" style="display: none;">
+                    <!-- <div class="progress-bar" id="progess" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                        aria-valuemax="100" style="width: 0%;"></div>
+                    <p id="progress-text"></p> -->
+                    <div id="myProgress">
+                        <div id="myBar"></div>
+                    </div>
+                </div>
+                <p class="card-text" id="progessDIV1" style="display: none;">Uploading file</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function onFormSubmit(event) {
+            event.preventDefault();
+            var formData = new FormData();
+            formData.append('document', document.getElementById("file1").files[0]);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', window.location.href, true);
+            xhr.setRequestHeader("X-CSRFToken", document.getElementsByName("csrfmiddlewaretoken")[0].value);
+            xhr.upload.addEventListener("progress", function (ev) {
+                if (ev.lengthComputable) {
+                    document.getElementById('progessDIV').style['display'] = 'block';
+                    document.getElementById('progessDIV1').style['display'] = 'block';
+                    var percentage = (ev.loaded / ev.total * 100 | 0);
+                    document.getElementById("myBar").style['width'] = "" + Math.round(percentage) + "%";
+                    document.getElementById("progessDIV1").innerHTML = "Uploaded : " + Math.round(percentage) + " %"
+                }
+            })
+            xhr.send(formData);
+        }
+    </script>
+
+
+    <script>
+        if (!localStorage.getItem('Font_Color')) {
+            localStorage.setItem('Font_Color', '#ffffff')
+        };
+        if (!localStorage.getItem('Background_Color')) {
+            localStorage.setItem('Background_Color', '#132449')
+        };
+        if (!localStorage.getItem('Locations_numbers')) {
+            localStorage.setItem('Locations_numbers', '100')
+        };
+        $('#sidebar-wrapper').attr('style', 'background-color: ' + localStorage.getItem('Background_Color') + ' !important');
+        $('#bjksdjks').attr('style', 'background-color: ' + localStorage.getItem('Background_Color') + ' !important');
+        $('#menu-toggle').attr('style', 'color: ' + localStorage.getItem('Font_Color') + ' !important');
+        $('.uyhbfdhbhueb').attr('style', 'color: ' + localStorage.getItem('Font_Color') + ' !important');
+    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+$('#myInput').trigger('focus')
+})
+</script>
+
+</body>
+
+</html>

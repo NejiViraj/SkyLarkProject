@@ -1,0 +1,247 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% get_static_prefix %}bootstrap.css">
+    <link rel="stylesheet" href="{% get_static_prefix %}style.css">
+    <script src="{% get_static_prefix %}jquery.min.js"></script>
+    <script src="{% get_static_prefix %}pagination.min.js"></script>
+    <style>
+        /* input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0;
+        } */
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+
+
+        .quantity-block {
+            margin: auto;
+            font-size: 20px;
+        }
+
+        .quantity-arrow-minus,
+        .quantity-arrow-plus {
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px 12px;
+            width: 40px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .quantity-num {
+            font-size: 20px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            outline: none;
+        }
+    </style>
+    <script>
+        $(function () {
+
+            (function quantityProducts() {
+                var $quantityArrowMinus = $(".quantity-arrow-minus");
+                var $quantityArrowPlus = $(".quantity-arrow-plus");
+                var $quantityNum = $(".quantity-num");
+
+                $quantityArrowMinus.click(quantityMinus);
+                $quantityArrowPlus.click(quantityPlus);
+
+                function quantityMinus() {
+                    if ($quantityNum.val() > 1) {
+                        $quantityNum.val(+$quantityNum.val() - 1);
+                    }
+                }
+
+                function quantityPlus() {
+                    $quantityNum.val(+$quantityNum.val() + 1);
+                }
+            })();
+
+        });
+    </script>
+</head>
+
+<body>
+    <script>
+        $(function () {
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            $(window).resize(function (e) {
+                if ($(window).width() <= 768) {
+                    $("#wrapper").removeClass("toggled");
+                } else {
+                    $("#wrapper").addClass("toggled");
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+    
+    <nav class="navbar navbar-expand d-flex justify-content-between" id="bjksdjks">
+        <div class="uyhbfdhbhueb mx-3">
+            <a href="{%url 'dashboard'%}" class="uyhbfdhbhueb">Back</a>
+            <a href="#menu-toggle" id="menu-toggle" class="navbar-brand mx-3" style="color: #fff !important;"></a>
+        </div>
+        <div class="quantity-block">
+            <!-- <button class="quantity-arrow-minus"> - </button> -->
+            <input class="quantity-num" type="number" value="0" onchange="data_shower(parseInt(this.value)*50);" id="my_number" />
+            <!-- <button class="quantity-arrow-plus"> + </button> -->
+        </div>
+    </nav>
+    <div id="wrapper" style="overflow-y: auto;">
+        <div class="container-fluid" style="height: 100%;position: fixed;overflow-y: auto;">
+
+
+
+            <table class="table table-striped my-3">
+                <thead>
+                    <tr>
+                        <th scope="col">Reg. id</th>
+                        <th scope="col">Drone name</th>
+                        <th scope="col">First launch</th>
+                        <th scope="col">total flight time min</th>
+                    </tr>
+                </thead>
+                <tbody id="datashower">
+                    <!-- <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr> -->
+                </tbody>
+            </table>
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script>
+
+        function readTextFile(file, callback) {
+            var rawFile = new XMLHttpRequest();
+            rawFile.overrideMimeType("application/json");
+            rawFile.open("GET", file, true);
+            rawFile.onreadystatechange = function () {
+                if (rawFile.readyState === 4 && rawFile.status == "200") {
+                    callback(rawFile.responseText);
+                }
+            }
+            rawFile.send(null);
+        }
+        var data1 = ""
+        console.log(data1.length)
+        
+        function content(a, b, c, d) {
+            return '<tr><th scope="row">' + a + '</th>' +
+                ' <td>' + b + '</td>' +
+                ' <td>' + c + '</td>' +
+                ' <td>' + d + '</td>' +
+                '</tr>'
+        }
+        
+        // data_shower(0);
+        function data_shower(number) {
+            console.log("HHHH")
+            document.getElementById("datashower").innerHTML = "";
+
+            readTextFile("/media/" + localStorage.getItem("json_file"), function (text) {
+                data1 = JSON.parse(text);
+                console.log(data1.length)
+                document.getElementById("my_number").min='0';
+                document.getElementById("my_number").max="'"+Math.ceil(data1.length/50)+"'";
+                var counter = number;
+                for (var i = number; i < number + 51; i++) {
+                    if(counter == number+51){break};
+                    counter += 1;
+                    i = counter;
+                    if(i==0){i=0}else{i=(i-1)}
+                    $("#datashower").append(content(data1[i]['reg_id'], data1[i]['drone_name'], data1[i]['first_launch'], data1[i]['total_flight_time_min']));
+                }
+                console.log(data1)
+            });
+        }
+        document.getElementById("my_number").addEventListener('onchange', data_shower)
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <script src="{% get_static_prefix %}script.js"></script> -->
+    <script>
+        if (!localStorage.getItem('Font_Color')) {
+            localStorage.setItem('Font_Color', '#ffffff')
+        };
+        if (!localStorage.getItem('Background_Color')) {
+            localStorage.setItem('Background_Color', '#132449')
+        };
+        if (!localStorage.getItem('Locations_numbers')) {
+            localStorage.setItem('Locations_numbers', '100')
+        };
+        $('#sidebar-wrapper').attr('style', 'background-color: ' + localStorage.getItem('Background_Color') + ' !important');
+        $('#bjksdjks').attr('style', 'background-color: ' + localStorage.getItem('Background_Color') + ' !important');
+        $('#menu-toggle').attr('style', 'color: ' + localStorage.getItem('Font_Color') + ' !important');
+        $('.uyhbfdhbhueb').attr('style', 'color: ' + localStorage.getItem('Font_Color') + ' !important');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="{% get_static_prefix %}bootstrap.css">
+  <link rel="stylesheet" href="{% get_static_prefix %}style.css">
+  <script src="{% get_static_prefix %}jquery.min.js"></script>
+  <script src="{% get_static_prefix %}script.js"></script>
+  <script src="http://maps.google.com/maps/api/js?key=&callback=initMap" type="text/javascript"></script>
+</head>
+
+<body>
+<script>
+  $(function () {
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    $(window).resize(function (e) {
+        if ($(window).width() <= 768) {
+            $("#wrapper").removeClass("toggled");
+        } else {
+            $("#wrapper").addClass("toggled");
+        }
+    });
+});
+</script>
+  <nav class="navbar navbar-expand d-flex justify-content-between" id="bjksdjks"> 
+    <a href="#menu-toggle" id="menu-toggle"
+      class="navbar-brand mx-3" style="color: #fff !important;"> ☰ </a> 
+      <h6 id="uihiuduiei" class="uyhbfdhbhueb">Status : No file selected</h6>
+    <div class="uyhbfdhbhueb mx-3">
+      <label for="Drone_Type" class="uyhbfdhbhueb">Drone Type</label>
+      <select name="Drone_Type" id="Drone_Type" onclick="add_In_Drone_Type()" onchange="filterMarkers_Drone_Type(this.value);">
+        
+        <option value="" style="background-color: green;">-----</option>
+      </select>
+      
+      
+      <label for="Poilet_ID" class="uyhbfdhbhueb">Poilet ID</label>
+      <select name="cars" id="Poilet_ID" onclick="add_In_Poilet_ID()" onchange="filterMarkers_Poilet_ID(this.value);">
+        
+        <option value="" style="background-color: green;">-----</option>
+      </select>
+
+      
+      <label for="Last_seen" class="uyhbfdhbhueb">Last seen</label>
+      <select name="cars" id="Last_seen" onclick="add_In_Last_seen()" onchange="filterMarkers_Last_seen(this.value);">
+        
+        <option value="" style="background-color: green;">-----</option>
+      </select>
+      <label for="Last_seen" class="uyhbfdhbhueb">Hello, {{ user.username }}</label>
+    </div>
+  </nav>
+  <div id="wrapper">
+    
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <li class="sidebar-brand"> <a href="{%url 'about_me'%}" class="uyhbfdhbhueb"> By Viraj Neji </a> </li>
+        <li> <a href="{%url 'json_upload'%}" class="uyhbfdhbhueb">Upload JSON</a> </li>
+        <li> <a href="{%url 'select_json'%}" class="uyhbfdhbhueb" id="hbhbuhuhjknjknk">Select JSON file</a> </li>
+        <li> <a href="{%url 'json_preview'%}" id="json_preview" class="uyhbfdhbhueb">View JSON in pagination way</a> </li>
+        <li> <a href="{%url 'settings'%}" class="uyhbfdhbhueb">Setting</a> </li>
+        <li> <a href="{%url 'logout'%}" class="uyhbfdhbhueb">Logout</a> </li>
+      </ul>
+    </div>
+    <div class="container-fluid" style="height: 100%;position: fixed;">
+      <div id="map" style="background-color: rgb(241, 255, 117); width: 100%;height: 100%;"></div>
+    </div>
+  </div>
+
+
+  <script src="{% get_static_prefix %}script.js"></script>
+  <script>
+    // document.getElementById("json_preview").href=document.getElementById("json_preview").href+"?json="+localStorage.getItem('json_file')+"&start=0"
+      if (! localStorage.getItem('Font_Color')){
+          localStorage.setItem('Font_Color', '#ffffff')
+      };
+      if (! localStorage.getItem('Background_Color')){
+          localStorage.setItem('Background_Color', '#132449')
+      };
+      if (! localStorage.getItem('Locations_numbers')){
+          localStorage.setItem('Locations_numbers', '100')
+      };
+      $('#sidebar-wrapper').attr('style', 'background-color: '+localStorage.getItem('Background_Color')+' !important');
+      $('#bjksdjks').attr('style', 'background-color: '+localStorage.getItem('Background_Color')+' !important');
+      $('#menu-toggle').attr('style', 'color: '+localStorage.getItem('Font_Color')+' !important');
+      $('.uyhbfdhbhueb').attr('style', 'color: '+localStorage.getItem('Font_Color')+' !important');
+  </script>
+  <script>
+    function hbhbe(){
+                    var jjiiuji = document.getElementById("uihiuduiei");
+                    if(localStorage.getItem('json_file')){
+                        jjiiuji.innerHTML = "Selected : <b>"+localStorage.getItem('json_file')+"</b>"
+                    }else{
+                        var ujijiuj = "{%url 'select_json'%}"
+                        jjiiuji.innerHTML = "<a href='"+ujijiuj+"' class='uyhbfdhbhueb'>No JSON file selected, please select</a>"
+                    };
+                };
+    hbhbe();
+  </script>
+</body>
+
+</html>
+
+
+
+
